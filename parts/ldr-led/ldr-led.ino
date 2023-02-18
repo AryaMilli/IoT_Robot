@@ -1,18 +1,20 @@
-#define ledpin 1 //LED pin
-#define ldr A0 //LDR analog input pin 
+const int analogInPin = A0;  // ESP8266 Analog Pin 
+const int ledPin = 1;
 
-void setup(){
-  Serial.begin(9600);
-  pinMode(ledpin, OUTPUT);
-  pinMode(ldr, INPUT);
+int sensorValue = 0;  // value read from the pot
+
+
+void setup() {
+  pinMode(analogInPin, INPUT);
+  pinMode(ledPin, OUTPUT);
 }
 
-void loop(){
-  digitalWrite(ledpin, LOW);       //initially led off
-  int ldrreading = analogRead(A0); //ldr analog reading 
-  Serial.print (ldrreading);
-  if(ldrreading>10){ //turn on led if ldr reading more than 10
-   digitalWrite(ledpin, HIGH);
+void loop() {
+  sensorValue = analogRead(analogInPin); 
+  digitalWrite(ledPin, LOW);
+  if (sensorValue > 80) {
+    digitalWrite(ledPin, HIGH);
   }
-  digitalWrite(ledpin, LOW);
+  
+  delay(500);
 }
