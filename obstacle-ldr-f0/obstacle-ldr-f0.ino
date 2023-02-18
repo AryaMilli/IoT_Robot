@@ -3,7 +3,7 @@
 #define BLYNK_TEMPLATE_NAME "ServoControl"
 #define BLYNK_AUTH_TOKEN "_U01qp0mch2XJiFCRh15WF53EHvKuiFf"
 
-#define BLYNK_PRINT Serial
+//#define BLYNK_PRINT Serial
 #include <ESP8266WiFi.h> //libraries 
 #include <BlynkSimpleEsp8266.h>
 #include <Servo.h> //servo library 
@@ -35,7 +35,7 @@ void setup() {
   pinMode(MB1,OUTPUT);
   pinMode(MB2,OUTPUT);
   
-  Serial.begin(9600); //baud rate for esp8266
+ // Serial.begin(9600); //baud rate for esp8266
   Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass); //blynk start function initialization 
 
   myservo.attach(servoPin, 500, 2400); //servo (pin, min, max )
@@ -64,7 +64,7 @@ void setup() {
   //ultrasonic distance calculation 
   duration = pulseIn(echopin, HIGH);
   distance= duration*0.034/2;
-  Serial.println(distance);
+   myservo.write(0);
   
   if(distance<13){ //if obstacle detected then stop the mtors 
     digitalWrite(MB1,LOW);
@@ -73,20 +73,13 @@ void setup() {
     digitalWrite(MB1,LOW);
     myservo.write(150);
     digitalWrite(buzzer_pin, HIGH);
-   }
-   else{
-    myservo.write(0);
-    }
-   
-    
+   }    
   delay(100);
   digitalWrite(buzzer_pin, LOW);
   
-  
   digitalWrite(ledpin, LOW);       //initially LED is OFF
   int ldrreading = analogRead(A0); //ldr analog reading 
-  Serial.print (ldrreading);
-  if(ldrreading>10){ //turn on led if ldr reading more than 10
+  if(ldrreading>80){ //turn on led if ldr reading more than 10
    digitalWrite(ledpin, HIGH);
   }
   digitalWrite(ledpin, LOW);
@@ -107,7 +100,6 @@ BLYNK_WRITE(V1){ //moving forward
    digitalWrite(MB1,HIGH);
    digitalWrite(MA2,LOW);
    digitalWrite(MB2,LOW);
-   Serial.println("Forward");
  }
  else
  {
@@ -116,7 +108,6 @@ BLYNK_WRITE(V1){ //moving forward
    digitalWrite(MB1,LOW);
    digitalWrite(MA2,LOW);
    digitalWrite(MB2,LOW);
-   Serial.println("Stopping ");
  }
 }
 
@@ -129,7 +120,6 @@ BLYNK_WRITE(V2){ //moving backward
    digitalWrite(MA2,HIGH);
    digitalWrite(MB1,LOW);
    digitalWrite(MB2,HIGH);
-   Serial.println("Moving Backwards");
 
  }
  else
@@ -139,7 +129,6 @@ BLYNK_WRITE(V2){ //moving backward
    digitalWrite(MA2,LOW);
    digitalWrite(MB1,LOW);
    digitalWrite(MB2,LOW);
-   Serial.println("Stopping");
  }
 }
 
@@ -153,7 +142,6 @@ BLYNK_WRITE(V3){ //moving left
    digitalWrite(MA2,LOW);
    digitalWrite(MB1,LOW);
    digitalWrite(MB2,LOW);
-   Serial.println("Moving Left");
   
  }
  else
@@ -163,7 +151,6 @@ BLYNK_WRITE(V3){ //moving left
    digitalWrite(MA2,LOW);
    digitalWrite(MB1,LOW);
    digitalWrite(MB2,LOW);
-   Serial.println("Stopping");
  }
 }
 
@@ -176,7 +163,6 @@ BLYNK_WRITE(V4){ //moving right
    digitalWrite(MA2,LOW);
    digitalWrite(MB1,HIGH);
    digitalWrite(MB2,LOW);
-   Serial.println("Moving Right");
    
  }
  else
@@ -186,6 +172,5 @@ BLYNK_WRITE(V4){ //moving right
    digitalWrite(MA2,LOW);
    digitalWrite(MB1,LOW);
    digitalWrite(MB2,LOW);
-   Serial.println("Stopping");
  }
 }
