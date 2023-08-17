@@ -1,5 +1,5 @@
-# obstacle-buzz
-//This is an obstacle detecting robot which uses nodemcu as its microcontroller 
-//The IoT app used to control it is Blynk IoT 
-//After the detection of obstacle(using ultrasonic sensor), Servo motor rotates and buzzer starts buzzing 
-//in addition to this the project also consists a circuitry of LED and LDR 
+# IoT Robot with sensors
+This repository contains the project of an Internet of Things Robot made with ESP8266 NodeMCU and BlynkIoT app. 
+The sensors interfaced with the microcontroller are Ultrasonic distance sensor for smart braking and an LDR with a buzzer and an LED. 
+For locomotion, the Blynk app was configured according to the requirement. 
+The LDR sensor data is shown as an analog output on the Blynk app. 
